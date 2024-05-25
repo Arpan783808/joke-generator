@@ -9,6 +9,17 @@ app.set("view engine", "ejs");
 const API_URL = "https://v2.jokeapi.dev/joke";
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get("/", async (req, res) => {
+  try {
+    const response = await axios.get(
+      API_URL+"/Any"
+    );
+    const joke = response.data;
+    res.render("index", { joke });
+  } catch (error) {
+    res.status(500).send("Error fetching joke");
+  }
+});
 app.get("/getjoke",async (req,res)=>{
     try{
         const result=await axios.get(API_URL+"/Any");
@@ -60,7 +71,7 @@ app.get("/getpun", async (req, res) => {
 });
 app.get("/getspooky", async (req, res) => {
   try {
-    const result = await axios.get(API_URL + "/Spooky");
+    const result = await axios.get(API_URL + "/Spook");
 
     const joke = result.data;
     console.log(joke);
